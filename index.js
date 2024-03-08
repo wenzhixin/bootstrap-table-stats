@@ -41,7 +41,7 @@ class Stats {
       'Repo',
       'Releases',
       'Commits',
-      'Submited Pull Requests',
+      'Submitted Pull Requests',
       'Handled Pull Requests',
       'Closed Issues'
     ]
