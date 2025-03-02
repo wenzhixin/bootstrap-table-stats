@@ -127,11 +127,24 @@ class Stats {
   }
 
   async countClosedIssues (repo) {
-    return await this.loadUrl(
-      `${repo}/issues`,
-      `is:issue is:closed involves:${this.user} closed:${this.since}..${this.until}`,
-      '#js-issues-toolbar .states a.selected'
-    )
+    const res = await axios.get('https://github.com/_graphql', {
+      params: {
+        body: JSON.stringify({
+          query: '29746fd23262d23f528e1f5b9b427437',
+          variables: {
+            name: repo.split('/')[1],
+            owner: 'wenzhixin',
+            query: `is:issue state:open involves:${this.user} closed:${this.since}..${this.until}`
+          }
+        })
+      }
+    }, {
+      headers: {
+        referer: 'https://github.com/wenzhixin/bootstrap-table/issues'
+      }
+    })
+
+    return res.data.data.repository.search.closedIssueCount
   }
 }
 
